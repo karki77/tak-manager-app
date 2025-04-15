@@ -30,10 +30,11 @@ void (async (): Promise<void> => {
 app.use(cors());
 app.use(express.json());
 
-// app.get('/test', (req, res) => {
-//     res.send('Hello World!')}
-// );
-app.use('/test', routers);
+// app.post('/test-direct', (req, res) => {
+//   console.log('Direct route hit!', req.body);
+//   res.json({msg: 'Direct route working'});
+// });
+ app.use('/test/user', routers);
 
 app.listen(PORT, () => {
     console.log(`Server is running at port ${PORT}`);
