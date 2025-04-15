@@ -5,7 +5,7 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 // POST route to create a new User
-router.post('/user', async (req, res) => {
+router.post(' /user', async (req, res) => {
     const { id, email, password } = req.body;
 
     try {
