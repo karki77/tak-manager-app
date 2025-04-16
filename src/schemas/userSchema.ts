@@ -3,7 +3,8 @@
 // src/schemas/userSchema.ts
 import { z } from 'zod';
 
-export const userSchema = z.object({
+// userSchema.ts
+export const CreateUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6)
 });

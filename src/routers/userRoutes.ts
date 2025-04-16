@@ -1,9 +1,21 @@
-import { Router } from 'express';
-import { handleLogin, handleRegister } from '../Controllers/userController';
+// 
+// import express from 'express';
+// import { registerUser, loginUser } from '../Controllers/userController';
+// import { validateRequest } from '../middleware/validation';
+// import { userSchema } from '../schemas/userSchema';
 
-const router = Router();
+// const router = express.Router();
 
-router.post('/register', handleRegister);
-router.post('/login', handleLogin);
+// router.post('/register', validateRequest(userSchema), registerUser);
+// router.post('/login', validateRequest(userSchema), loginUser);
+
+// export default router;
+import express from 'express';
+import { registerUser } from '../Controllers/userController';
+import { validateRequest } from '../middleware/validation';
+import  {CreateUserSchema}from '../schemas/userSchema';
+const router = express.Router();
+
+router.post('/register', validateRequest(CreateUserSchema), registerUser);
 
 export default router;

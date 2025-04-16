@@ -2,9 +2,10 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import routers from './routers/router';
+import userRoutes from './routers/userRoutes';
+
 import {PrismaClient} from '@prisma/client';
 const prisma = new PrismaClient();
-import userRoutes from './routers/userRoutes';
 
 
 
@@ -36,9 +37,11 @@ app.use(express.json());
 //   console.log('Direct route hit!', req.body);
 //   res.json({msg: 'Direct route working'});
 // });
- //app.use('/test/user', routers);
-app.use('/api/user', userRoutes); // Use the user routes
+ app.use('/', userRoutes);
+ // Use the user routes
 app.listen(PORT, () => {
     console.log(`Server is running at port ${PORT}`);
     
 });
+
+
