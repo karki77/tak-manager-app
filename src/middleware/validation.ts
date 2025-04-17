@@ -43,7 +43,7 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { AnyZodObject } from 'zod';
 
 export const validateRequest = (schema: AnyZodObject): RequestHandler => {
-  return (req, res, next) => {
+  return  (req, res, next) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
       res.status(400).json({ error: result.error.format() });

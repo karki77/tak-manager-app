@@ -44,7 +44,10 @@
 // };
 
 import { Request, Response } from 'express';
-import { createUser } from '../services/userService';
+import { createUser, findUserByEmail } from '../services/userService';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 
 export const registerUser = (req: Request, res: Response) => {
   const { id, email, password } = req.body;
@@ -63,3 +66,32 @@ export const registerUser = (req: Request, res: Response) => {
     });
 };
 
+export const loginUser = (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  
+  findUserByEmail(email)
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({error: 'User not found' });
+      }
+      
+      return bcrypt.compare(password, user.password)
+        .then(isMatch => {
+          if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+          }
+          
+          const token = jwt.sign(
+            {userId: user.id}, 
+            process.env.JWT_SECRET ?? 'secret', 
+            { expiresIn: '1d' }
+          );
+          
+          res.status(200).json({ message: 'Login successful', token });
+        });
+    })
+    .catch(error => {
+      console.error('Error in loginUser:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+};
